@@ -37,58 +37,9 @@ mvn package exec:exec
 In your web browser, navigate to http://127.0.0.1:10001 and order yourself some
 µ-donuts.
 
-### Pick a Tracer
+### Using Jaeger Tracer and send to SignalFx Gateway
 
-Several OpenTracing-compatible Tracer implementations are supported
-out-of-the-box for convenience. Others can be added easily with a local change
-to `App.java`.
-
-#### Jaeger
-
-To run Jaeger locally (via Docker):
-
-```bash
-$ docker run -d -p 5775:5775/udp -p 16686:16686 jaegertracing/all-in-one:latest
-```
-
-Then add the following to `microdonuts/tracer_config.properties`:
-
-```properties
-tracer=jaeger
-jaeger.reporter_host=localhost
-jaeger.reporter_port=5775
-```
-
-Note that the all-in-one docker image presents the Jaeger UI at [localhost:16686](http://localhost:16686/).
-
-#### Zipkin
-
-To run Zipkin locally (via Docker):
-
-```bash
-$ docker run -d -p 9411:9411 openzipkin/zipkin
-```
-
-Then add the following to `microdonuts/tracer_config.properties`:
-
-```properties
-tracer=zipkin
-zipkin.reporter_host=localhost
-zipkin.reporter_port=9411
-```
-
-Note that the all-in-one docker image presents the Zipkin UI at [localhost:9411](http://localhost:9411/).
-
-#### LightStep
-
-If you have access to [LightStep](https://app.lightstep.com]), you will need your access token. Add the following to `microdonuts/tracer_config.properties`:
-
-```properties
-tracer=lightstep
-lightstep.collector_host=collector.lightstep.com
-lightstep.collector_port=443
-lightstep.access_token=XXXXXXXXXXXXXXX  // TODO: replace with your token
-```
+Run the SignalFx Smart Gateway and have it listen to `localhost:9080/v1/trace`
 
 ## Step 1: Check out the `no-tracing` branch
 
